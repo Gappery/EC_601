@@ -10,6 +10,13 @@ from google.cloud.vision import types
 
 def analyse(name_info):
     # Instantiates a client
+    print("*************************************************************")
+    print("*************************************************************")
+
+    print("Second step: Analyse and label those 30 pictures")
+
+    print("*************************************************************")
+    print("*************************************************************")
 
     font = ImageFont.truetype('times.ttf',30)
     name_info_out = name_info + '_final'
@@ -20,6 +27,7 @@ def analyse(name_info):
         print(e)
 
     client = vision.ImageAnnotatorClient()
+    print("Using cloud vision api")
 
     list_names = os.listdir('./' + name_info_raw)
 
@@ -43,6 +51,8 @@ def analyse(name_info):
         draw.text((0,0), label_string, (0,0,255), font=font)
 
         image_temp.save('./' + name_info_out + '/' + name)
+
+        print("Label process finished")
 
 
 
