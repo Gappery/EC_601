@@ -19,8 +19,9 @@ def get_pics_urls(name_info):
     api = tweepy.API(auth)
 
     #create the txt file to store the url of pictures
+    name_info_raw = name_info + '_raw'
     try:
-        os.makedirs('./' + name_info)
+        os.makedirs('./' + name_info_raw)
     except Exception as e:
         print(e)
     alltweets = []
@@ -42,13 +43,15 @@ def get_pics_urls(name_info):
 
     count = 1
     for status in alltweets:
+        if count == 31:
+            break
         if 'media' in status.entities:
             for media in status.entities['media']:
                 if media['type'] == 'photo':
                     image_url = media['media_url']
                     if (image_url[-4:] == '.jpg'):
                         filename = 'pic_num_' + str(count)
-                        filepath = './' + name_info + '/' + filename + '.jpg'
+                        filepath = './' + name_info_raw + '/' + filename + '.jpg'
                         try:
                             request.urlretrieve(image_url, filepath)
                         except Exception as e:
