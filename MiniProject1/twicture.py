@@ -19,8 +19,10 @@ def get_pics_urls(name_info):
     api = tweepy.API(auth)
 
     #create the txt file to store the url of pictures
-    os.makedirs('./' + name_info)
-    f = open('./' + name_info + '/' + name_info + '.txt','w')
+    try:
+        os.makedirs('./' + name_info)
+    except Exception as e:
+        print(e)
     alltweets = []
 
     #make initial request for most recent tweets (10 this time)
@@ -38,17 +40,18 @@ def get_pics_urls(name_info):
         oldest = new_tweets[-1].id - 1
         new_tweets = api.user_timeline(screen_name = name_info, count = 10, max_id = oldest)
 
-    count = 0
+    count = 1
     for status in alltweets:
         if 'media' in status.entities:
             for media in status.entities['media']:
                 if media['type'] == 'photo':
                     image_url = media['media_url']
                     if (image_url[-4:] == '.jpg'):
-                        count += 1
-                        filename = str(count)
+                        filename = 'pic_num_' + str(count)
                         filepath = './' + name_info + '/' + filename + '.jpg'
                         try:
                             request.urlretrieve(image_url, filepath)
-                        except(NameError, KeyError):
-                            pass
+                        except Exception as e:
+                            print(e)
+                        else:
+                            count += 1
