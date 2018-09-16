@@ -13,6 +13,16 @@ access_secret = "Gy5tsayny2SIf4aMDzO2Dv4vKE7BNtmqFpUuFU88TC0rF"
 
 def get_pics_urls(name_info):
 
+    print("*************************************************************")
+    print("*************************************************************")
+
+    print("First step: dowanload 30 pictures from given account:" + name_info)
+
+    print("*************************************************************")
+    print("*************************************************************")
+
+
+
     #authorize twitter and initialize tweepy
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_key, access_secret)
@@ -24,6 +34,8 @@ def get_pics_urls(name_info):
         os.makedirs('./' + name_info_raw)
     except Exception as e:
         print(e)
+    else:
+        print('Successfully create directory ' + name_info_raw)
     alltweets = []
 
     #make initial request for most recent tweets (10 this time)
@@ -40,6 +52,8 @@ def get_pics_urls(name_info):
         alltweets.extend(new_tweets)
         oldest = new_tweets[-1].id - 1
         new_tweets = api.user_timeline(screen_name = name_info, count = 10, max_id = oldest)
+
+    print("First grabbing finished")
 
     count = 1
     for status in alltweets:
@@ -58,3 +72,5 @@ def get_pics_urls(name_info):
                             print(e)
                         else:
                             count += 1
+
+    print("Finishing grabbing, 30 pictures totally")
