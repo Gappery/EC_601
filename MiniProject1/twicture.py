@@ -32,7 +32,7 @@ def get_pics_urls(name_info):
     try:
         os.makedirs('./' + name_info_raw)
     except Exception as e:
-        print(e)
+        print('Create file failed: directory already exist')
     else:
         print('Successfully create directory ' + name_info_raw)
 
@@ -41,7 +41,10 @@ def get_pics_urls(name_info):
     alltweets = []
 
     #make initial request for most recent tweets (10 this time)
-    new_tweets = api.user_timeline(screen_name = name_info, count = 10)
+    try:
+        new_tweets = api.user_timeline(screen_name = name_info, count = 10)
+    except Exception as e:
+        print('Connect to Twitter API failed')
 
     #save most recent tweets
     alltweets.extend(new_tweets)
@@ -57,6 +60,9 @@ def get_pics_urls(name_info):
         new_tweets = api.user_timeline(screen_name = name_info, count = 10, max_id = oldest)
 
     print("First grabbing finished")
+
+    if (len(alltweets) < 30):
+        print("not enough photos for this account")
 
     # use a counter to name the pictures
     count = 1

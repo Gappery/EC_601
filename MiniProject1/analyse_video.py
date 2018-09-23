@@ -1,7 +1,6 @@
 import os
 import io
 import PIL.Image as Image
-import PIL.ImageColor as ImageColor
 import PIL.ImageDraw as ImageDraw
 import PIL.ImageFont as ImageFont
 
@@ -19,7 +18,6 @@ def analyse(name_info):
     print("*************************************************************")
 
     # set the font for labels printed on pictures
-    font = ImageFont.truetype('times.ttf',30)
     name_info_out = name_info + '_final'
     name_info_raw = name_info + '_raw'
 
@@ -27,7 +25,7 @@ def analyse(name_info):
     try:
         os.makedirs('./' + name_info_out)
     except Exception as e:
-        print(e)
+        print('Create file failed: directory already exist')
 
     # connect to vision api
     client = vision.ImageAnnotatorClient()
@@ -47,8 +45,12 @@ def analyse(name_info):
         image = types.Image(content=content)
 
         # performs label detection on the image file
-        response = client.label_detection(image=image)
-        labels = response.label_annotations
+        try:
+            response = client.label_detection(image=image)
+            labels = response.label_annotations
+        except Exception as e:
+            print('Create file failed: directory already exist')
+
 
         # sum the labels to one string
         label_string = "Labels for this Image: \n"
@@ -58,7 +60,7 @@ def analyse(name_info):
         # draw labels to the specific picture
         image_temp = Image.open(path)
         draw = ImageDraw.Draw(image_temp)
-        draw.text((0,0), label_string, (0,0,255), font=font)
+        draw.text((0,0), label_string, (0,0,255))
 
         # save the processed picture
         image_temp.save('./' + name_info_out + '/' + name)
