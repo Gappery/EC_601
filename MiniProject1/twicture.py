@@ -1,13 +1,15 @@
 import tweepy
 import os
+import sys
+
 from urllib import request
 
 
 # add your own credentials here
-consumer_key = ""
-consumer_secret = ""
-access_key = ""
-access_secret = ""
+consumer_key = "7GaWskLF46Xx7fUmKgMiKN97C"
+consumer_secret = "MybOuiFrhftY9OiJCQteueTK1Nwe7g34bnGHkyU3AFFMkJjwda"
+access_key = "1040700523287138304-YLlkHfmw9O4Ty4vtjzbVgw5ccvFdQt"
+access_secret = "Gy5tsayny2SIf4aMDzO2Dv4vKE7BNtmqFpUuFU88TC0rF"
 
 
 def get_pics_urls(name_info):
@@ -45,6 +47,15 @@ def get_pics_urls(name_info):
         new_tweets = api.user_timeline(screen_name = name_info, count = 10)
     except Exception as e:
         print('Connect to Twitter API failed')
+
+
+    # chech if the account has no tweets(pictures)
+    if len(new_tweets) == 0:
+        print("No pictures for this twitter account, please try another account")
+    sys.exit(0)
+
+
+
 
     #save most recent tweets
     alltweets.extend(new_tweets)
