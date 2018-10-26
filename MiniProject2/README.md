@@ -23,7 +23,7 @@ To make sure the project can run successfully, please put the data to the correc
 		* type1(modify it to the correct type name)<br>
 			* images(please put the first type train data here)<br>
 		* type2(modify it to the correct type name)<br>
-			*i mages(please put the first type train data here)<br>
+			* images(please put the first type train data here)<br>
 
 
 **Note**: All data should be pictures with format "jpg"
