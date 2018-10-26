@@ -13,19 +13,17 @@ To make sure the project can run successfully, please put the data to the correc
 >classfication.py<br>
 >main.py<br>
 >dataset<br>
+<br>
 >predict<br>
+>>images(please put the first type train data here)<br>
 <br>
 >dataset<br>
 >>train<br>
 >>test<br>
-<br>
->>train/test<br>
 >>>type1(modify it to the correct type name)<br>
 >>>type2(modify it to the correct type name)<br>
 >>>>images(please put the first type train data here)<br>
-<br>
->>predicting<br>
->>>images(please put the first type train data here)<br>
+
 
 **Note**: All data should be pictures with format "jpg"
 ### 2.2 Corresponding Package Installation
