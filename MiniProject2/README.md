@@ -1,35 +1,35 @@
 # mini_project_2 Deep Learning: Binary Image Classification
 ## 1. Project Introduction
-In this project, using Keras, which is a open source neural network library written by python, I build two sequential model and evaluate their performance given a specific dataset
+In this project, using Keras, which is a open source neural network library written by python, I build two sequential model and evaluate their performance given a specific dataset.
 ## 2. Prerequisites
 ### 2.1 Data Preparation
 #### 2.1.1 Data Set
-Since it is a binary classification project, so the requirement for the dataset is that it contains only two types of data and the images are labeled and classified.
+Since it is a binary classification project, the requirement for the dataset is that it contains only two types of data and the images are labeled and classified.<br>
 [Here is a example data set][https://www.kaggle.com/c/dogs-vs-cats-aca2018/data]
 #### 2.1.2 Data Organization
-**Note**: If you want to use the project as an API, there is no requirement for the location of the data, you only need to know how to invoke functions correctly
+**Note**: <br>If you want to use the project as an API, there is no requirement for the location of the data, you only need to know how to invoke functions correctly<br>
 There are mainly four types of data: training, valiation, testing, predicting. But for user, you only need to provide three types, they are training, testing and predicting, the code will split the validation part from trainign data<br>
-To make sure the project can run succefully, please put the data to the correct directory<br>
->classfication.py
->main.py
->dataset
+To make sure the project can run successfully, please put the data to the correct directory<br>
+>classfication.py<br>
+>main.py<br>
+>dataset<br>
 >>train
 >>>type1(modify it to the correct type name)
->>>>image1
->>>>image2(please put the first type train data here)
->>>type2(modify it to the correct type name)
->>>>image1
->>>>image2(please put the second type train data here)
->>test
->>>type1(modify it to the correct type name)
->>>>image1
->>>>image2(please put the first type test data here)
->>>type2(modify it to the correct type name)
->>>>image1
->>>>image2(please put the second type test data here)
->>predicting
->>>image1
->>>image2(please put the images you want to predict here)
+>>>>image1<br>
+>>>>image2(please put the first type train data here)<br>
+>>>type2(modify it to the correct type name)<br>
+>>>>image1<br>
+>>>>image2(please put the second type train data here)<br>
+>>test<br>
+>>>type1(modify it to the correct type name)<br>
+>>>>image1<br>
+>>>>image2(please put the first type test data here)<br>
+>>>type2(modify it to the correct type name)<br>
+>>>>image1<br>
+>>>>image2(please put the second type test data here)<br>
+>>predicting<br>
+>>>image1<br>
+>>>image2(please put the images you want to predict here)<br>
 **Note**: All data should be pictures with format "jpg"
 ### 2.2 Corresponding Package Installation
 **Note**: All installations are in windows environment and using pip methods
