@@ -10,19 +10,20 @@ Since it is a binary classification project, the requirement for the dataset is 
 **Note**: <br>If you want to use the project as an API, there is no requirement for the location of the data, you only need to know how to invoke functions correctly<br>
 There are mainly four types of data: training, valiation, testing, predicting. But for user, you only need to provide three types, they are training, testing and predicting, the code will split the validation part from trainign data<br>
 To make sure the project can run successfully, please put the data to the correct directory<br>
->classfication.py<br>
->main.py<br>
->dataset<br>
-<br>
->predict<br>
->>images(please put the first type train data here)<br>
-<br>
->dataset<br>
->>train<br>
->>test<br>
->>>type1(modify it to the correct type name)<br>
->>>type2(modify it to the correct type name)<br>
->>>>images(please put the first type train data here)<br>
+*classfication.py<br>
+*main.py<br>
+*dataset<br>
+*model<br>
+*predict<br>
+	*images(please put the first type train data here)<br>
+
+*dataset<br>
+	*train<br>
+	*test<br>
+		*type1(modify it to the correct type name)<br>
+			*images(please put the first type train data here)<br>
+		*type2(modify it to the correct type name)<br>
+			*images(please put the first type train data here)<br>
 
 
 **Note**: All data should be pictures with format "jpg"
