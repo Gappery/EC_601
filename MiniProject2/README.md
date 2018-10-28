@@ -49,6 +49,6 @@ evaluate_model
 #### 3.1.3 Last Step: Image Prediction
 predict_image
 ### 3.2 Run as project
-**Note**: Make sure you have finished 2.1.2 first
+**Note**: Make sure you have finished 2.1.2
 cd to the correct location, then:
 ```$ \python main.py</br>
