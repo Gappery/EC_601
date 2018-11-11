@@ -1,4 +1,4 @@
-# mini_project_2 Deep Learning: Binary Image Classification
+# mini_project_2 Deep Learning: Binary Classification
 ## 1. Project Introduction
 In this project, using Keras, which is a open source neural network library written by python, I build two sequential model and evaluate their performance given a specific dataset.
 ## 2. Prerequisites
