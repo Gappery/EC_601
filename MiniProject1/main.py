@@ -2,6 +2,8 @@ import datetime
 import tweepy
 import os
 import sys
+import databaseUtils
+
 
 
 from urllib import request
@@ -15,15 +17,13 @@ def get_pics_urls(name_info, keyword, session_id):
 
     keyword = keyword.lower()
 
-    print("First step: dowanload 30 pictures from given account:" + name_info)
-
-    #authorize twitter and initialize tweepy
+    # authorize twitter and initialize tweepy
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_key, access_secret)
     api = tweepy.API(auth)
 
-    #create the txt file to store the url of pictures
-    store_path = "./" + name_info + "/" + keyword + "/" + session_id;
+    # create the txt file to store the url of pictures
+    store_path = "./" + name_info + "/" + keyword + "/" + str(session_id);
     try:
         os.makedirs(store_path)
     except Exception as e:
@@ -31,7 +31,7 @@ def get_pics_urls(name_info, keyword, session_id):
     else:
         print('Successfully create directory ' + store_path)
 
-    # print("Then we would download up to 30 pictures for the given twitter account"  + name_info)
+    print("\nSession ID is " + str(session_id) + ". The qualified pictures will be stored at path " + store_path)
 
     alltweets = []
 
@@ -40,6 +40,7 @@ def get_pics_urls(name_info, keyword, session_id):
         new_tweets = api.user_timeline(screen_name = name_info, count = 10)
     except Exception as e:
         print('Connect to Twitter API failed')
+        exit(0)
 
     # chech if the account has no tweets(pictures)
     if len(new_tweets) == 0:
@@ -54,23 +55,22 @@ def get_pics_urls(name_info, keyword, session_id):
 
     # keep grabbing tweets until there are no tweets left to grab
     print("Connected, start grabbing all tweets...............................")
-    while len(new_tweets) > 0:
+    while len(new_tweets) > 0 and len(alltweets) < 500:
         alltweets.extend(new_tweets)
         oldest = new_tweets[-1].id - 1
         new_tweets = api.user_timeline(screen_name = name_info, count = 10, max_id = oldest)
 
 
-    print("First grabbing finished")
+    print("Grabbing finished")
 
     # use a counter to name the pictures
     count = 1
     # for each tweet stored in alltweets
-    for status in alltweets:
+    for status in alltweets[1:]:
         # preset maximum pictures number:30
         if count == 31:
             break
-
-        if status.text.find(keyword) != -1:
+        if status.text.lower().find(keyword) != -1:
             print(status.text)
             # if this tweet has media attribute
             if 'media' in status.entities:
@@ -90,13 +90,13 @@ def get_pics_urls(name_info, keyword, session_id):
                             else:
                                 # successfully download, counter adds 1
                                 count += 1
-                                print("Downloading Process: " + str(int((count - 1) * 100 / 30)) + "%")
+                                # print("Downloading Process: " + str(int((count - 1) * 100 / 30)) + "%")
 
     print("All qualified pictures have downloaded, you can find them at " + store_path)
     return count-1
 
 
-def twitter_mode():
+def twitter_mode(mongo_collection, sql_conn):
     while(True):
         print("Please fill a username/nickname")
         user_name = input()
@@ -106,24 +106,40 @@ def twitter_mode():
         descriptor = input()
         session_id = int(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
         images_number = get_pics_urls(account_name, descriptor, session_id)
+        databaseUtils.mongo_insert(user_name, session_id, account_name, images_number, descriptor, mongo_collection)
+        databaseUtils.sql_insert(user_name, session_id, account_name, images_number, descriptor, sql_conn)
 
-def database_mode():
+
+def database_mode(mongo_collection, sql_conn):
     while(True):
         print("Please fill the statistics result you want to view:\n")
         print("1. Most popular descriptor\n2. Average pictures per feed\n")
         option = int(input())
-        if option == 0:
-            ok = 0
+        if option == 1:
+            print("\nAccording to the mongo database\n")
+            databaseUtils.mongo_popular_descriptor(mongo_collection)
+            print("\nAccording to the sql database\n")
+            databaseUtils.sql_search_popular_descriptor(sql_conn)
 
-
+        elif option == 2:
+            print("\nAccording to the mongo database\n")
+            databaseUtils.mongo_average_img(mongo_collection)
+            print("\nAccording to the sql database\n")
+            databaseUtils.sql_search_image_num(sql_conn)
 
 
 if __name__ == '__main__':
+    databaseUtils.mongo_delete_all()
+    mongo_collection = databaseUtils.mongo_initiate()
+    sql_conn = databaseUtils.sql_initiate("localhost", "Gappery", "De94blnei")
+    databaseUtils.sql_create_table(sql_conn)
+    print("\nDatabase initialization finished.........................")
     print("Please choose your purpose\n1 for twitter search, 2 for statistics view")
-    if (int)(input()) == 1:
-        twitter_mode()
-    elif (int)(input()) == 2:
-        database_mode()
+    option = int(input())
+    if option == 1:
+        twitter_mode(mongo_collection, sql_conn)
+    elif option == 2:
+        database_mode(mongo_collection, sql_conn)
     else:
         print("invalid input")
         exit(0)
