@@ -9,11 +9,11 @@ MySQL can be downloaded from https://www.mysql.com/
 MongoDB can be downloade from https://www.mongodb.com
 ### 2.2 Corresponding Python package
 #### 2.2.1 pymysql for MySQL
-```$ pip install pymysql<br>
+```$ pip install pymysql```<br>
 #### 2.2.2 
-```$ pip install pymongo<br>
+```$ pip install pymongo```<br>
 #### 2.2.3 tweepy for connecting to twitter
-```$ pip install tweepy<br>
+```$ pip install tweepy```<br>
 ## 3. Project Structure
 The project is consisted of two python files
 * main.py <br> follow up file for project one, add advanced searching function and a tutorial for using database API
